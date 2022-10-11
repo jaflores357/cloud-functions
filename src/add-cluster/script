@@ -1,0 +1,48 @@
+curl -H "content-type: application/json" \
+-X POST https://clusters-api-gw-ckykgeqh.uc.gateway.dev/clusters\?key\=AIzaSyCNDvk4T1eKhS6Nl0kP91vYL1M5Qsvl_Ps \
+-d '{
+  "name": "cluster-us",
+  "cluster_name": "us-production-2",
+  "project_zone": "us-central1",
+  "project_name": "cluster-us",
+  "cluster_cloud": "gcp",
+  "environments": ["test", "prod"]
+}'
+
+curl -H "content-type: application/json" \
+-X POST https://clusters-api-gw-ckykgeqh.uc.gateway.dev/clusters\?key\=AIzaSyCNDvk4T1eKhS6Nl0kP91vYL1M5Qsvl_Ps \
+-d '{
+    "name": "itau",
+    "cluster_name": "br-itau-production-1",
+    "project_zone": "southamerica-east1",
+    "project_name": "cluster-admin",
+    "cluster_cloud": "aws",
+    "environments": ["test", "prod", "hom"],
+    "zones": ["a", "b", "c"]
+  }'
+
+
+curl -H "content-type: application/json" \
+-X POST https://clusters-api-gw-ckykgeqh.uc.gateway.dev/clusters\?key\=AIzaSyCNDvk4T1eKhS6Nl0kP91vYL1M5Qsvl_Ps \
+-d '{
+    "name": "assai",
+    "cluster_name": "br-assai-production-1",
+    "project_zone": "southamerica-east1",
+    "project_name": "cluster-admin",
+    "cluster_cloud": "aws",
+    "environments": ["test", "prod", "dev"],
+    "zones": ["a", "b", "c"]
+  }'
+
+
+curl -H "content-type: application/json" \
+-X POST https://clusters-api-gw-ckykgeqh.uc.gateway.dev/clusters\?key\=AIzaSyCNDvk4T1eKhS6Nl0kP91vYL1M5Qsvl_Ps \
+-d '{
+    "name": "cluster-aws",
+    "cluster_name": "br-cluster-aws-1",
+    "project_zone": "southamerica-east1",
+    "project_name": "cluster-admin",
+    "cluster_cloud": "aws",
+    "environments": ["test", "prod"],
+    "zones": ["a", "b", "c"]
+  }'

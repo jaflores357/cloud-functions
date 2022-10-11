@@ -1,0 +1,55 @@
+image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
+variables:
+  TF_ROOT: ${CI_PROJECT_DIR}/terraform
+  TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/clusters-api
+
+cache:
+  key: clusters-api
+  paths:
+    - ${TF_ROOT}/.terraform
+
+before_script:
+  - cd ${TF_ROOT}
+  - echo $GCLOUD_SERVICE_KEY > terraform-cluster-admin.json
+
+stages:
+  - prepare
+  - validate
+  - build
+  - deploy
+
+init:
+  stage: prepare
+  script:
+    - gitlab-terraform init
+
+validate:
+  stage: validate
+  script:
+    - gitlab-terraform validate
+
+plan:
+  stage: build
+  script:
+    - gitlab-terraform plan
+    - gitlab-terraform plan-json
+  artifacts:
+    name: plan
+    paths:
+      - ${TF_ROOT}/plan.cache
+      - ${TF_ROOT}/dist
+    reports:
+      terraform: ${TF_ROOT}/plan.json
+
+apply:
+  stage: deploy
+  needs:
+    - plan
+  environment:
+    name: production
+  script:
+    - gitlab-terraform apply
+  dependencies:
+    - plan
+  only:
+    - main
